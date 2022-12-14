@@ -9,5 +9,9 @@ FROM python:3.9
 # Set the working directory within docker image
 WORKDIR /usr/src/app
 
+COPY requirements.txt .
+
+RUN pip install -r requirements.txt
+
 # expose port 8080
 EXPOSE 8080
