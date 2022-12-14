@@ -3,7 +3,7 @@ version: "3.3"
 services:
   backend-api:
     # location of docker file for node container
-    build: ./cnn4_backend
+    build: ./backend
     # restart on crashes
     restart: always
     # working directory in container to place files
@@ -24,7 +24,7 @@ services:
     # option to allow Create React App run with tty requirement
     stdin_open: true
     # location of docker file for node container
-    build: ./cnn4
+    build: ./frontend
     # restart on crashes
     restart: always
     # working directory in container to place files
