@@ -36,8 +36,10 @@ class Utility(Resource):
       send = None
       if utility == 1:
         send = "win"
-      else:
+      elif utility == -1:
         send = "loss"
+      else:
+        send = "draw"
       return {
         "statusCode": 200,
         "body": {"got": send},
