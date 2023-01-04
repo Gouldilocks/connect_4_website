@@ -5,7 +5,7 @@ import yellow from '../../assets/BoardImages/yellow.png';
 import red from '../../assets/BoardImages/red.png';
 import nothing from '../../assets/BoardImages/space.png';
 import { getMove, getTerminal, getUtility } from '../../api/MoveApi';
-import { Button } from '@mui/material';
+import { Button, Box, ImageList, ImageListItem } from '@mui/material';
 
 export default function ConnectBoard() {
   const [board, setBoard] = useState([]);
@@ -154,10 +154,10 @@ export default function ConnectBoard() {
   // visualize a connect 4 board
   return (
     <>
-
-      
-      <Grid2 container spacing={2}
+      <Grid2 container spacing={0}
       direction={"row"}
+        // justifyContent="center"
+        // alignItems="center"
       >
         {/* This is the options on the left */}
         <Grid2 item xs={12} md={3}>
@@ -180,42 +180,19 @@ export default function ConnectBoard() {
         {/* End options on the right */}
 
         {/* This is the board itself */}
-        <Grid2 item xs={12} md={6}>
-          <Grid2 container spacing={0}
-          direction="row"
-          >
+          <ImageList cols={7}>
             {board.map((row, i) => (
-              <Grid2 item xs={12}>
-                <Grid2 container spacing={0}
-                  direction={"row"}
+              row.map((col, i) => (
+                <ImageListItem key={i}
+                onClick={() => insertPieceAtCol(i, player, true)}
                 >
-                    {row.map((col, i) => (
-                      <Grid2 item xs={1.25}
-                        onClick={() => insertPieceAtCol(i, player, true)}
-                      >
-                        {
-                          (col === 0) ? <img src={empty} alt="empty piece"></img> : (col === -1) ? <img src={yellow} alt="yellow piece"></img> : <img src={red} alt="red piece"></img>
-                        }
-                      </Grid2>
-                    ))}
-                  </Grid2>
-              </Grid2>
+                <img src={col === 0 ? empty : col === -1 ? yellow : red} />
+              </ImageListItem>
+              ))
             ))}
-
-          </Grid2>
-
-          <Grid2 container spacing={0}
-            direction={"row"}
-          >
-            {colNums.map((x) => (
-              <Grid2 item xs={1.25} onClick={() => { insertPieceAtCol(x, player, true) }}>
-                <img src={nothing} alt="empty piece"></img>
-              </Grid2>
-            ))}
-          </Grid2>
-        </Grid2>
+          </ImageList>
+        </Grid2> 
         {/* End Board itself */}
-      </Grid2>
     </>
   );
 
