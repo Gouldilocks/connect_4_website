@@ -159,8 +159,28 @@ export default function ConnectBoard() {
       <Grid2 container spacing={2}
       direction={"row"}
       >
+        {/* This is the options on the left */}
+        <Grid2 item xs={12} md={3}>
+          <div>
+            To play, just click on one of the columns to drop your first piece! By default, you are player Red, which puts the AI at a disadvantage, but you can change that by clicking the button labeled "PLAY AS YELLOW", and the AI will make the first move. Click "RESET" to reset the board and make the AI play as Yellow again.
+          </div>
+          <br></br>
+          {!userCanPlay && <h1>AI is thinking...</h1>}
+          <Button onClick={() => {
+            resetBoard();
+          }}>Reset</Button>
+          {winner && <h1>Winner: {getWinnerAsString(theWinner)}</h1>}
+          {newGame && <h1>Start a new game!</h1>}
+          {newGame && <Button onClick={() => {
+            setPlayer(-1);
+            setNewGame(false);
+            runAITurn(1);
+          }} >Play as Yellow</Button>}
+        </Grid2>
+        {/* End options on the right */}
+
         {/* This is the board itself */}
-        <Grid2 item xs={8}>
+        <Grid2 item xs={12} md={6}>
           <Grid2 container spacing={0}
           direction="row"
           >
@@ -195,23 +215,6 @@ export default function ConnectBoard() {
           </Grid2>
         </Grid2>
         {/* End Board itself */}
-
-
-        {/* This is the options on the right */}
-        <Grid2 item xs={2}>
-          {!userCanPlay && <h1>AI is thinking...</h1>}
-          <Button onClick={() => {
-            resetBoard();
-          }}>Reset</Button>
-          {winner && <h1>Winner: {getWinnerAsString(theWinner)}</h1>}
-          {newGame && <h1>Start a new game!</h1>}
-          {newGame && <Button onClick={() => {
-            setPlayer(-1);
-            setNewGame(false);
-            runAITurn(1);
-          }} >Play as Yellow</Button>}
-        </Grid2>
-        {/* End options on the right */}
       </Grid2>
     </>
   );
