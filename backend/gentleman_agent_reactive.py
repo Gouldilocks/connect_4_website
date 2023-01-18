@@ -149,14 +149,18 @@ class Gouldilocks:
   # Returns the column in which opponent has a winning move. -1 if there is none
   def check_override_move(self, board):
     for i in self.actions(board):
-        util = self.utility(self.result(board, i, -self.player), self.player)
-        if util == 1:
-            return i
-
-    for i in self.actions(board):
-        util = self.utility(self.result(board, i, self.player), self.player)
-        if util == -1:
-            return i
+        if self.terminal(self.result(board, i, -self.player)):
+            util = self.utility(self.result(board, i, -self.player), self.player)
+            if util == 1:
+                return i
+            elif util == -1:
+                return i
+        elif self.terminal(self.result(board, i, self.player)):
+            util = self.utility(self.result(board, i, self.player), self.player)
+            if util == 1:
+                return i
+            elif util == -1:
+                return i
     return None
 
   # This function should return an array of actions that are one win away for us,
@@ -605,7 +609,7 @@ class Gouldilocks:
     # Settable variables
     evalFunc = self.earlyEval
     # depth = 9
-    depth = 6
+    depth = 7
     
     # update any moves we need to stall
     self.get_new_stall_actions(board)
@@ -613,20 +617,18 @@ class Gouldilocks:
     # Find how deep we should search
     if self.turns_taken > 7:
         # depth = 10
-        depth = 6
+        depth = 7
     if self.turns_taken > 10:
         evalFunc = self.evaluation
         # depth = 11
-        depth = 6
+        depth = 7
     if self.turns_taken > 12:
         depth = 42
 
     # Run the minimax to find optimal move
-    print("depth is: " , depth)
     return self.minimax_new(evalFunc, board, depth, -math.inf, math.inf, True, self.player)[1]
 
   def get_environment_move(self, board, player):
-    # print("agent move num: " , self.turns_taken)
     return {
         "move" : self.get_move(board, player),
         "eval" : 0
